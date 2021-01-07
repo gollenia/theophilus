@@ -1,0 +1,22 @@
+<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+	{% if path|length == 3 %}
+		<li><a class="uk-button uk-button-success" href="#modal-full" uk-toggle><span uk-icon="icon: check"></span> Bearbeiten</a></li>
+		<li><a href="#"><i class="material-icons-new outline-tv icon-white"></i><span>SongBeamer-Export</span></a></li>
+    	<li><a href="#"><i class="material-icons-new outline-delete icon-white"></i><span>Lied Löschen</span></a></li>
+	{% endif %}
+	{% if path|length == 2 %}
+    	<li><a class="uk-button uk-button-success" href="#modal-newsong" uk-toggle><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Neues Lied</a></li>
+    {% endif %}
+
+    <li class="uk-nav-header">Musik</li>
+    
+    <li><a href="/music"><i class="material-icons-new outline-dashboard icon-white"></i><span>Übersicht</span></a></li>
+    {% set categories = get_data('songCategory', 'show', path[1]) %}
+    {% for item in categories %}
+    	<li><a href="/music:{{item.name}}"><i class="material-icons-new outline-folder icon-white"></i><span>{{item.title}}</span></a></li>
+    {% endfor %}
+    
+    {% if path|length == 1 %}
+    	<li><a href="#modal-newcategory" uk-toggle><span class="uk-margin-small-right" uk-icon="icon: plus"></span> Neue Kategorie</a></li>
+    {% endif %}
+</ul>

@@ -1,0 +1,20 @@
+<div class="tx-content" id="documentApp">
+	<div class="tx-subnav">
+		<div class="uk-container">
+			<ul class="uk-breadcrumb">
+				{% for crumb in get_breadcrumbs(id) %}
+					<li><a href="/{{crumb.id}}">{{crumb.title}}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="uk-container">
+		{% set content = get_page() %}
+		{% if content == "" %}
+		Seite existiert nicht
+		{% else %}
+		<div id="content">{{ content|raw }}</div>
+		{% endif %}
+		<a href="" uk-totop></a>
+	</div>
+</div>

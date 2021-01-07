@@ -1,0 +1,49 @@
+{% set categories = get_data('songCategory', 'show', path[1]) %}
+
+<div class="uk-container" id="categoriesApp">
+	
+	<!-------- LIST ------->
+	<h1>Musik</h1>
+	<div class="uk-child-width-1-2@m" uk-grid>
+	    	{% for category in categories %}
+	        <a href="/music:{{ category.name }}" class="uk-inline">
+	        	<div class="uk-cover-container uk-height-small">
+	            <img src="https://theophilus.gollenia.net/lib/exe/fetch.php?media=music:{{ category.image }}&w=600" uk-cover  alt="">
+	            <div class="uk-overlay uk-overlay-default uk-position-center">
+	                <p>{{ category.title }}</p>
+	            </div>
+	            </div>
+	        </a>
+	        {% endfor %}
+	   
+	</div>
+	
+	<!-------- NEW CATEGORY MODAL ------->
+	<div id="modal-newcategory" uk-modal>
+	    <div class="uk-modal-dialog">
+	        <button class="uk-modal-close-default" type="button" uk-close></button>
+	        <div class="uk-modal-header">
+	            <h2 class="uk-modal-title">Neue Kategorie</h2>
+	        </div>
+	        <div class="uk-modal-body">
+	            <div class="uk-margin">
+		            <input class="uk-input" v-model="title" type="text" placeholder="Titel">
+		        </div>
+		        <div class="uk-margin">
+		        	<b>Slug: </b><span v-text="slug"></span>
+		        </div>
+		        <div class="uk-margin" uk-margin>
+			        <div uk-form-custom="target: true">
+			            <input id="File" type="file">
+			            <input class="uk-input uk-form-width-medium" type="text" placeholder="Bild auswählen" disabled>
+			        </div>
+			    </div>
+	        </div>
+	        <div class="uk-modal-footer uk-text-right">
+	            <button class="uk-button uk-button-default uk-modal-close" type="button">Abbrechen</button>
+	            <button class="uk-button uk-button-primary" @click="save()" type="button">Fertig</button>
+	        </div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,124 @@
+
+
+<div id="ShowApp" class="uk-offcanvas-content uk-height-1-1">
+
+	<script>sidebarTree = []</script>
+	
+	{% if path|length >= 3 %}
+	{% set treeRoot = [path[0], path[1], path[2]]|join(':') %}
+	<script>
+		sidebarTree = {{get_tree(treeRoot)|json_encode()|raw}}.tree[0];
+	</script>
+	{% endif %}
+
+	<!-------- NAVIGATION BAR ------->
+	<nav class="uk-navbar-container" uk-navbar>
+    	<div class="nav-overlay uk-navbar-left">
+			<a class="uk-navbar-toggle uk-visible@m" onclick="toggleSidebar()" uk-navbar-toggle-icon href="#"></a>
+			<a class="uk-navbar-toggle uk-hidden@m" href="#my-id" uk-toggle uk-navbar-toggle-icon></a>
+	        <a class="uk-navbar-item uk-logo" href="#">Theophilus</a>
+	    </div>
+	    <div class="nav-overlay uk-navbar-right">
+	    	<div class="uk-navbar-item">
+	    		<a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+	    	</div>
+	    	<div class="uk-navbar-item">
+			    <a class="tx-topbar-button uk-button" href="/{{id}}&do=edit" uk-toggle>Bearbeiten</a>
+			</div>
+	    	
+	    </div>
+	    <div id="searchApp" class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+
+	        <div class="uk-navbar-item uk-width-expand">
+	            <form class="uk-search uk-search-navbar uk-width-1-1">
+	                <input v-model="string" class="uk-search-input" id="fullSearch" type="search" @keyup="start()" placeholder="Suchen..." autofocus>
+	            </form>
+	        </div>
+	        <div v-if="results.length > 0" class="tx-search">
+	        	<ul>
+	        		<li v-for="item in results">
+	        			<a v-bind:href="'/music:' + item.category + ':' + item.name"><b v-text="item.title"></b>
+	        			<span style="float:right" v-text="item.artist"></span>
+	        			<br>
+	        			<span class="uk-text-small" style="float:right" v-text="item.bible"></span>
+	        			<span class="uk-text-small" v-text="item.subtitle"></span></a>
+	        			
+	        		</li>
+	        	</ul>
+	        </div>
+	
+	        <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+
+    	</div>
+	</nav>
+	
+	<!-------- MAIN CONTENT ------->
+	<main id="main">
+		
+		<!-------- SIDEBAR ------->
+		<div id="my-id" uk-offcanvas>
+     
+	    </div>
+		<div id="sidebar" class="tx-sidebar uk-hidden-touch">
+		    {% include 'documents/sidebar.twig' %}
+		</div>
+		
+		<!-------- TEMPLATE LOADER ------->
+		<div class="content-wrapper">
+			<div class="tx-content" id="documentApp">
+				<div class="tx-subnav">
+					<div class="uk-container">
+						<ul class="uk-breadcrumb">
+							{% for crumb in get_breadcrumbs(id) %}
+								<li><a href="/{{crumb.id}}">{{crumb.title}}</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				<div class="uk-container">
+					{% set content = get_page() %}
+					{% if content == "" %}
+					Seite existiert nicht
+					{% else %}
+					<div id="content">{{ content|raw }}</div>
+					{% endif %}
+					<a href="" uk-totop></a>
+				</div>
+			</div>
+
+		</div>
+		
+		<!-------- SEARCH RESULTS ------->
+		<div id="search--results" class="tx-search-results">
+			
+		</div>
+	</main>
+	
+</div>
+
+
+{% verbatim %}
+	<script type="text/x-template" id="item-template">
+  <li>
+    <div
+      :class="{folder: isFolder, file: !isFolder}"
+      @click="toggle"
+      @dblclick="changeType">
+      <i v-if="(isFolder && !open)" class="material-icons arrow">arrow_right</i>
+      <i v-if="(isFolder && open)" class="material-icons arrow">arrow_drop_down</i>
+       <i v-if="(isFolder)" class="material-icons">folder</i> <i v-if="(!isFolder)" class="material-icons">insert_drive_file</i> <span class="name">{{ model.title }}</span>
+      
+    </div>
+    <ul v-show="open" v-if="isFolder">
+      <item
+        class="item"
+        v-for="(model, index) in model.children"
+        :key="index"
+        :model="model">
+      </item>
+      <i @click="addChild" class="material-icons">note_add</i>
+      
+    </ul>
+  </li>
+</script>
+{% endverbatim %}

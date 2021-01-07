@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Theophilus</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700|Roboto:500,700&amp;subset=greek,greek-ext" rel="stylesheet">
+		<link href="{{assets}}/style.css" type='text/css' rel="stylesheet">
+		<link href="{{assets}}{{ app }}.css" type='text/css' rel="stylesheet">
+		
+		<script>
+			var base_url = "{{ base }}";
+			var ajaxUrl = '/doku.php';
+			var id = '{{ id }}';
+		</script>
+		
+  		<script src="{{assets}}/vendor.js"></script>
+
+	</head>
+	
+	<body {% if "now"|date("G") > 19  %}class="night"{% endif %}>
+		{% include [app ~ '/' ~ act ~'.twig', app ~ '/' ~'show.twig', '500.twig'] %}
+		
+		<script src="{{assets}}/{{ app }}.js"></script>
+		
+	</body>
+	
+	{% include 'common/media.twig' %}
+	
+	<script src="{{assets}}/uikit.js"></script>
+	<script src="{{assets}}/media.js"></script>	
+	
+</html>
+	

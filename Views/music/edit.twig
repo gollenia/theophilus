@@ -1,0 +1,110 @@
+<div id="modal-full" class="uk-modal-full" uk-modal>
+				<div class="uk-modal-dialog" id="editApp" style="min-height: 100%">
+                <nav class="uk-navbar-container" uk-navbar>
+			    <div class="uk-navbar-left">
+					<a class="uk-navbar-toggle" href="#modal-full" uk-toggle uk-icon="icon: arrow-left; ratio: 2" href="#"></a>
+			        <ul class="uk-navbar-nav">
+			            
+			        	</ul>
+				
+				    </div>
+				    <div class="uk-navbar-right">
+				    	<div class="uk-navbar-item">
+			            	<a class="uk-button uk-button-danger" @click="save()" href="#modal-full" uk-toggle><span uk-icon="icon: check"></span> Speichern</a>
+			        	</div>
+				    </div>
+				</nav>
+				<form>
+					
+					<div uk-grid>
+						<div class="tx-toolbar">
+							<span class="tx-button-group">
+								<button v-shortkey="['alt', 'c']" @shortkey="editorSurroundSelection('[', ']')" @click="editorSurroundSelection('[', ']')" uk-icon="icon: code"></button><button uk-icon="icon: italic"></button><button uk-icon="icon: strikethrough"></button>
+							</span>
+							
+							<span class="tx-button-group">
+								<button v-shortkey="['alt', 'r']" @shortkey="editorSurroundSelection('{start_of_chorus: Chorus}\n', '\n{end_of_chorus}')" 
+					            		@click="editorSurroundSelection('{start_of_chorus: Chorus}\n', '\n{end_of_chorus}')"><span uk-icon="icon: refresh"></span> Chorus</button>
+					            		<button v-shortkey="['alt', 'r']" @shortkey="editorSurroundSelection('{start_of_verse: Verse}\n', '\n{end_of_verse}')" 
+					            		@click="editorSurroundSelection('{start_of_verse: Verse}\n', '\n{end_of_verse}')"><span uk-icon="icon: arrow-right"></span> Vers</button>
+							</span>
+						</div>
+			   		<div class="uk-width-1-1@l uk-margin">
+			            <codemirror ref="txCodeEdit"
+			              :value="sheet.content" 
+			              :options="cmOptions"
+			              @ready="onCmReady"
+			              @focus="onCmFocus"
+			              @input="onCmCodeChange">
+  						</codemirror>
+			        </div>
+			   	    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Titel</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="text" :class="{'uk-form-danger': sheet.title == ''}" v-model="sheet.title" placeholder="Titel des Liedes">
+				        </div>
+				    </div>
+				    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Untertitel</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="text" v-model="sheet.subtitle" placeholder="Untertitel od. Alternativer Titel">
+				        </div>
+				    </div>
+				    
+	
+				    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Künstler</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="text" v-model="sheet.artist" placeholder="Sänger oder Band">
+				        </div>
+				    </div>
+				    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Text</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="text" v-model="sheet.composer" placeholder="Autor des Textes">
+				        </div>
+				    </div>
+				    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Musik</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="text" v-model="sheet.melody" placeholder="Komponist">
+				        </div>
+				    </div>
+				    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Tonart</label>
+				        <div class="uk-form-controls">
+				        	<select :class="{'uk-form-danger': sheet.key == ''}" v-model="sheet.key" class="uk-select">
+				                <option>C</option>
+				                <option>D</option>
+				                <option>E</option>
+				                <option>F</option>
+				                <option>G</option>
+				                <option>A</option>
+				                <option>B</option>
+				            </select>
+				        </div>
+				    </div>
+				    
+				    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Bibelstelle</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="text" v-model="sheet.bible" placeholder="Johannes 3,16">
+				        </div>
+				    </div>
+				    <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Geschwindigkeit</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="number" v-model="sheet.bpm" placeholder="Beats Per Minute">
+				        </div>
+				    </div>
+				   <div class="uk-width-1-3@l uk-margin">
+				        <label class="uk-form-label" for="form-stacked-text">Copyright</label>
+				        <div class="uk-form-controls">
+				            <input class="uk-input" id="title" type="text" v-model="sheet.copyright" placeholder="z.B. Hännsler-Verlag">
+				        </div>
+				    </div>
+			   		</div>
+			   </form>
+ 				</div>
+			   
+			</div>

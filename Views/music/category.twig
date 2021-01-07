@@ -1,0 +1,58 @@
+{% set category = get_data('songCategory', 'get', path[1]) %}
+
+
+<script>
+	songListData = {{ get_data('song', 'category', category.name)|json_encode|raw }};
+	category = "{{category.name}}";
+</script>
+
+<div id="categoryApp">
+
+<div class="uk-container">
+
+	<h1>{{ category.title }}</h1>
+	<form class="uk-search uk-search-default">
+    <a href="" uk-search-icon></a>
+    <input class="uk-search-input" type="search" placeholder="">
+</form>
+	<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+		<tr>
+            <th>Name</th>
+            <th>Interpret</th>
+            <th>Bibelstelle</th>
+            <th>Tonart</th>
+        </tr>
+		<tr v-for="song in list">
+			 <td class="uk-table-link"><a class="uk-link-reset" v-bind:href="'/music:{{category.name}}:'+song.name"><b v-text="song.title"></b><br><span class="uk-text-small" v-text="song.subtitle"></span></a></td>
+			 <td class="uk-table-link"><a class="uk-link-reset"><span v-text="song.artist"></span></a></td>
+			 <td class="uk-table-link"><span class="uk-link-reset"><span v-for="tag in song.bible" v-text="tag"></span></span></td>
+			 <td><span class="uk-label" v-text="song.key"></span>Dur</td>
+		</tr>
+	</table>
+
+</div>
+
+
+<!-------- NEW SONG MODAL  ------->
+	<div id="modal-newsong" uk-modal>
+	    <div class="uk-modal-dialog">
+	        <button class="uk-modal-close-default" type="button" uk-close></button>
+	        <div class="uk-modal-header">
+	            <h2 class="uk-modal-title">Neues Lied</h2>
+	        </div>
+	        <div class="uk-modal-body">
+	            <div class="uk-margin">
+		            <input v-model="title" class="uk-input" type="text" placeholder="Titel">
+		        </div>
+		        <div class="uk-margin">
+		            <b>Slug: </b><span v-text="slug"></span>
+		        </div>
+	        </div>
+	        <div class="uk-modal-footer uk-text-right">
+	            <button class="uk-button uk-button-default uk-modal-close" type="button">Abbrechen</button>
+	            <button class="uk-button uk-button-primary" @click="create()" type="button">Fertig</button>
+	        </div>
+   		</div>
+	</div>
+
+</div>

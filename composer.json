@@ -1,0 +1,14 @@
+{
+    "autoload": {
+    "psr-4": {
+      "Theophilus\\Classes\\": "Classes",
+      "Theophilus\\Controllers\\": "Controllers",
+      "Theophilus\\Models\\": "Models"
+    }
+  },
+    "require": {
+        "twig/twig": "^3.2",
+        "phpseclib/phpseclib": "^3.0",
+        "envms/fluentpdo": "^2.2"
+    }
+}

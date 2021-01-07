@@ -1,0 +1,77 @@
+
+
+<div id="EditApp" class="uk-height-1-1">
+
+	<!-- ------ NAVIGATION BAR ----- -->
+	<nav class="uk-navbar-container" uk-navbar>
+    	<div class="nav-overlay uk-navbar-left">
+			<a class="uk-navbar-toggle" href="/{{id}}"><i class="material-icons">arrow_back</i></a>
+	        <a class="uk-navbar-item uk-logo" href="#">Theophilus</a>
+	    </div>
+	    <div class="nav-overlay uk-navbar-right">
+
+	    	<div class="uk-navbar-item">
+			    <a class="uk-button" @click="save(true)" id="save" v-shortkey.once="['ctrl', 's']" @shortkey="save(false)">Speichern</a>
+			</div>
+	    	
+	    </div>
+	   
+	</nav>
+	
+	<!-- ------ MAIN CONTENT ----- -->
+	<main id="main">
+		
+		<script>
+			pageData = {
+				content: "{{get_raw_page()|e('js')}}",
+				id: "{{id}}",
+				meta: {{get_extras()|json_encode()|raw}}
+			}
+		</script>
+		
+		<!-- ------ TEMPLATE LOADER ----- -->
+		
+		<div class="content-wrapper">
+			<ul uk-tab>
+			    <li class="uk-active"><a href="#">Format</a></li>
+			    <li><a href="#">Daten</a></li>
+			    <li><a href="#">Medien</a></li>
+			    <li class="uk-disabled"><a>Sprachen</a></li>
+			</ul>
+			<ul class="uk-switcher uk-margin tx-ribbon">
+			    <li>
+			    	<a uk-tooltip="Fett (Strg-F)" class="uk-button" @click="textWrap('**', '**')" v-shortkey.once="['ctrl', 'b']" @shortkey="textWrap('**', '**')"><i class="material-icons">format_bold</i></a>
+			    	<a uk-tooltip="Kursiv (Strg-I)" class="uk-button" @click="textWrap('//', '//')" v-shortkey.once="['ctrl', 'i']" @shortkey="textWrap('//', '//')"><i class="material-icons">format_italic</i></a>
+			    	<a uk-tooltip="Unterstrichen (Strg-U)" class="uk-button" @click="textWrap('__', '__')" v-shortkey.once="['ctrl', 'u']" @shortkey="textWrap('__', '__')"><i class="material-icons">format_underline</i></a>
+			    	<a class="uk-button"><i class="material-icons">format_size</i></a>
+			    	<div uk-drop class="tx-ribbon-drop">
+			    		<a class="uk-button" @click="textWrap('====== ', ' ======')" v-shortkey.once="['ctrl', '1']" @shortkey="textWrap('====== ', ' ======')"><i class="material-icons">filter_1</i><span>Titel</span></a><br>
+			    		<a class="uk-button" @click="textWrap('===== ', ' =====')" v-shortkey.once="['ctrl', '2']" @shortkey="textWrap('===== ', ' =====')"><i class="material-icons">filter_2</i><span>Kapitelüberschrift</span></a><br>
+			    		<a class="uk-button" @click="textWrap('==== ', ' ====')" v-shortkey.once="['ctrl', '3']" @shortkey="textWrap('==== ', ' ====')"><i class="material-icons">filter_3</i><span>Untersüberschrift</span></a><br>
+			    		<a class="uk-button" @click="textWrap('=== ', ' ===')" v-shortkey.once="['ctrl', '4']" @shortkey="textWrap('=== ', ' ===')"><i class="material-icons">filter_4</i><span>Teilüberschrift</span></a><br>
+			    		<a class="uk-button" @click="textWrap('== ', ' ==')" v-shortkey.once="['ctrl', '5']" @shortkey="textWrap('== ', ' ==')"><i class="material-icons">filter_5</i><span>Abschnitt</span></a><br>
+			    		<a class="uk-button"><i class="material-icons">filter_6</i><span>Absatz</span></a><br>
+			    	</div>
+			    	<a class="uk-button"><i class="material-icons">palette</i></a>
+			    	<a class="uk-button"><i class="material-icons">format_list_bulleted</i></a>
+			    	<a class="uk-button"><i class="material-icons">format_list_numbered</i></a>
+			    </li>
+			    <li><a class="uk-button"><i class="material-icons">palette</i></a></li>
+			    <li><a class="uk-button" @click="MediaApp.openImageList(insertImage)"><i class="material-icons">palette</i></a></li>
+			</ul>
+			<codemirror ref="txCodeEdit"
+			              :value="page.content" 
+			              :options="cmOptions"
+			              @ready="onCmReady"
+            			@focus="onCmFocus"
+            			@input="onCmCodeChange">
+  			</codemirror>
+		</div>
+		
+		<!-- ------ SEARCH RESULTS ----- -->
+		<div id="search--results" class="tx-search-results">
+			
+		</div>
+	</main>
+	
+</div>

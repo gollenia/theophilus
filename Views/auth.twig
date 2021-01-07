@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Theophilus</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700" rel="stylesheet">
+		<link href="{{assets}}/style.css" rel="stylesheet">
+		<script>var base_url = "{{ base }}"</script>
+		 <script>
+			var ajaxUrl = 'https://theophilus.gollenia.net/doku.php';
+			var id = '{{ id }}';
+		</script>
+  		<script src="{{assets}}/vendor.js"></script>
+
+	</head>
+	
+	<body {% if "now"|date("G") > 19  %}class="night"{% endif %}>
+	
+		<div class="uk-flex uk-flex-middle uk-height-1-1 uk-flex-center">
+			<form id="login">
+			    <fieldset class="uk-fieldset">
+			
+			        <legend class="uk-legend">Login</legend>
+					<div class="uk-margin">
+						<div class="uk-inline">
+					    	 <span class="uk-form-icon" uk-icon="icon: user"></span>
+				    		<input id="user" class="uk-input" type="text" placeholder="Benutzer">
+				    	</div>
+					</div>
+			        <div class="uk-margin">
+			        	<div class="uk-inline">
+					    	<span class="uk-form-icon" uk-icon="icon: lock"></span>
+				    		<input id="pass" class="uk-input" type="password" placeholder="Passwort">
+			    		</div>
+					</div>
+					<div class="uk-margin">
+			            <label><input id="sticky" class="uk-checkbox" type="checkbox" checked> Angemeldet bleiben</label>
+			            
+			        </div>
+			        <div class="uk-margin">
+			        	<button id="loginBtn" class="uk-button uk-button-primary">Anmelden</button>
+			        </div>     
+			    </fieldset>
+			</form>
+		</div>
+		
+
+			
+	</body>
+	
+	
+	<script src="{{assets}}/uikit.js"></script>
+	<script src="{{ assets }}/login.js"></script>
+	
+</html>
+	

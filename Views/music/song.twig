@@ -1,0 +1,60 @@
+{% set category = get_data('songCategory', 'get', path[1]) %}
+
+<script>
+	initialSongData = {{ get_data('song', 'get', path[2])|json_encode|raw }};
+	songCategory = {{ category|json_encode|raw }}
+	var ajaxUrl = 'https://theophilus.gollenia.net/doku.php'
+</script>
+
+<div class="tx-content" id="sheetApp">
+	
+	<!-------- TOOLBAR  ------->
+	<div class="tx-subnav">
+		<div class="uk-container">
+			<ul class="uk-breadcrumb">
+			    <li><a href="/music">Musik</a></li>
+			    <li><a href="/music:{{category.name}}">{{ category.title }}</a></li>
+			    
+			</ul>
+			
+		</div>
+	</div>
+	
+	<!-------- SONG-SHEET  ------->
+	<div class="uk-container song">
+		<ul class="uk-subnav" uk-margin>
+				
+				<li>
+					
+			    	<a class="tx-button dropdown" v-html="keys[sheet.key]"></a>
+			    	<div uk-dropdown="mode: click">
+			    		<ul class="uk-nav uk-dropdown-nav">
+			    			<li id="key_f"><a  @click="transpose('H')" href="#"><span class="shape"><i>&#x266D</i><i>&#x266D</i></span> B Dur / G Moll</a></li>
+			    			<li id="key_f"><a  @click="transpose('F')" href="#"><span class="shape"><i>&#x266D</i></span> F Dur / D Moll</a></li>
+			    			<li id="key_c"><a  @click="transpose('C')" href="#"><span class="shape"><i>&#x266E</i></span> C Dur / A Moll</a></li>
+						    <li id="key_g"><a  @click="transpose('G')" href="#"><span class="shape"><i>&#x266F</i></span> G Dur /E Moll</a></li>
+						    <li id="key_d"><a  @click="transpose('D')" href="#"><span class="shape"><i>&#x266F</i><i>&#x266F</i></span> D Dur / H Moll</a></li>
+						    <li id="key_a"><a  @click="transpose('A')" href="#"><span class="shape"><i>&#x266F</i><i>&#x266F</i><i>&#x266F</i></span> A Dur / F# Moll</a></li>
+						    <li id="key_e"><a  @click="transpose('E')" href="#"><span class="shape"><i>&#x266F</i><i>&#x266F</i><i>&#x266F</i><i>&#x266F</i></span> E Dur / C# Moll</a></li>
+						    <li id="key_b"><a  @click="transpose('B')" href="#"><span class="shape"><i>&#x266F</i><i>&#x266F</i><i>&#x266F</i><i>&#x266F</i><i>&#x266F</i></span> H Dur / G# Moll</a></li>
+			    		</ul>
+			    	</div>
+				
+				</li>
+			    
+			    <li><input class="switch-input" id="show--chords" v-model="showChords" type="checkbox" checked><label for="show--chords" class="switch-label">Akkorde</label></li>
+			    <li><input class="switch-input" id="show--columns" v-model="showColumns" type="checkbox" checked><label for="show--columns" class="switch-label">Spalten</label></li>
+			</ul>
+		<h4 style="font-weight: bold; color: #0078ff" v-text="sheet.title"></h4>
+		<h4 style="font-weight: bold; color: #81898f" v-text="sheet.subtitle"></h4>
+		<span  style="color: #81898f">
+		<span v-if="sheet.composer">Text: </span><span v-if="sheet.composer" v-text="sheet.composer + '.'"></span>
+		<span v-if="sheet.melody"> Musik: </span><span v-if="sheet.melody" v-text="sheet.melody + '.'"></span>
+		<span v-if="sheet.artist"> Musik: </span><span v-if="sheet.artist" v-text="sheet.artist + '.'"></span>
+		<span v-if="sheet.bible"> Bibelstelle: </span><span v-if="sheet.bible" v-text="sheet.bible"></span>
+		</span>
+		<div id="song" v-html="sheetData" v-bind:class="{'showchords': showChords, 'uk-column-1-2@m': showColumns}"></div>
+	</div>
+	
+	
+</div>

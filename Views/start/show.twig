@@ -1,0 +1,51 @@
+
+
+	<div id="app" class="uk-height-1-1">
+
+
+			<nav class="uk-navbar-container" uk-navbar>
+		    <div class="uk-navbar-left">
+				<a class="uk-navbar-toggle" uk-navbar-toggle-icon href=""></a>
+		        <ul class="uk-navbar-nav">
+		            <li class="uk-active"><a href="#">Active</a></li>
+		            <li>
+		                <a href="#">Parent</a>
+		                <div class="uk-navbar-dropdown">
+		                    <ul class="uk-nav uk-navbar-dropdown-nav">
+		                        <li class="uk-active"><a href="#">Active</a></li>
+		                        <li><a href="#">Item</a></li>
+		                        <li><a href="#">Item</a></li>
+		                    </ul>
+		                </div>
+		            </li>
+		            <li><a href="#">Item</a></li>
+		        </ul>
+		
+		    </div>
+		</nav>
+		
+		<div class="uk-height-1-1 uk-background-cover  uk-panel uk-flex uk-flex-center uk-flex-middle" style="background-image: url({{ assets }}/img/bg.jpg);">
+
+							
+    						<div class="uk-child-width-1-3@s uk-child-width-1-4@l" uk-grid>
+    							{% for key, application in apps %}
+    								<div>
+							          	<a href="/{{key}}" class="uk-grid">
+							               	 <div class="uk-width-1-4 uk-width-1-1@s uk-flex uk-flex-center@s uk-flex-middle"><img src="{{ assets }}/img/{{key}}.png" width="120px"></div>
+							               	 <div class="uk-width-3-4 uk-width-1-1@s uk-flex uk-flex-center@s uk-flex-middle"><span>{{application}}</span></div>
+						              	</a>
+			              			</div>
+    							{% endfor %}
+			              	</div>
+			             
+		</div>
+	      
+
+
+
+
+   
+   
+	</div>
+
+

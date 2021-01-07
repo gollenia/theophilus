@@ -1,0 +1,28 @@
+
+
+<ul id="SidebarApp" class="uk-nav-default uk-nav-parent-icon" uk-nav>
+	
+    <li class="uk-nav-header">Dokumente</li>
+    <li><a href="/music"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Übersicht</a></li>
+	
+
+	{% if path.length > 2 %}
+		<ul>
+			<item
+		    class="item tx-sidenav"
+		    :model="treeData">
+			</item>
+		</ul>
+	
+	{% else %}
+		{% set index = get_index(id) %}
+		{% for item in index %}
+			<li>
+				<a href="/{{item.id}}">{{item.title}}</a>
+			</li>
+		{% endfor %}
+	{% endif %}
+
+</ul>
+
+

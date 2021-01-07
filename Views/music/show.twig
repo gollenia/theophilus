@@ -1,0 +1,81 @@
+<script>
+	var ajaxUrl = 'https://theophilus.gollenia.net/doku.php';
+</script>
+
+<div id="app" class="uk-offcanvas-content uk-height-1-1">
+
+	<!-------- NAVIGATION BAR ------->
+	<nav class="uk-navbar-container" uk-navbar>
+    	<div class="nav-overlay uk-navbar-left">
+			<a class="uk-navbar-toggle uk-visible@m" onclick="toggleSidebar()" uk-navbar-toggle-icon href="#"></a>
+			<a class="uk-navbar-toggle uk-hidden@m" href="#my-id" uk-toggle uk-navbar-toggle-icon></a>
+	        <a class="uk-navbar-item uk-logo" href="#">Theophilus</a>
+	    </div>
+	    <div class="nav-overlay uk-navbar-right">
+	    	<div class="uk-navbar-item">
+	    		<a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+	    	</div>
+	    	<div class="uk-navbar-item">
+			    <a class="" uk-icon="icon: grid"></a>
+			    <div uk-dropdown="mode: click">{% include 'common/appmenu.twig' %}</div>
+			</div>
+	    	
+	    </div>
+	    <div id="searchApp" class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+
+	        <div class="uk-navbar-item uk-width-expand">
+	            <form class="uk-search uk-search-navbar uk-width-1-1">
+	                <input v-model="string" class="uk-search-input" id="fullSearch" type="search" @keyup="start()" placeholder="Suchen..." autofocus>
+	            </form>
+	        </div>
+	        <div v-if="results.length > 0" class="tx-search">
+	        	<ul>
+	        		<li v-for="item in results">
+	        			<a v-bind:href="'/music:' + item.category + ':' + item.name"><b v-text="item.title"></b>
+	        			<span style="float:right" v-text="item.artist"></span>
+	        			<br>
+	        			<span class="uk-text-small" style="float:right" v-text="item.bible"></span>
+	        			<span class="uk-text-small" v-text="item.subtitle"></span></a>
+	        			
+	        		</li>
+	        	</ul>
+	        </div>
+	
+	        <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+
+    	</div>
+	</nav>
+	
+	<!-------- MAIN CONTENT ------->
+	<main id="main">
+		
+		<!-------- SIDEBAR ------->
+		<div id="my-id" uk-offcanvas>
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                {% include 'music/sidebar.twig' %}
+            </div>
+	    </div>
+		<div id="sidebar" class="tx-sidebar uk-hidden-touch">
+		    {% include 'music/sidebar.twig' %}
+		</div>
+		
+		<!-------- TEMPLATE LOADER ------->
+		<div class="content-wrapper">
+			{% if path|length == 1 %}
+				{% include 'music/categories.twig' %}
+			{% elseif path|length == 2 %}
+				{% include 'music/category.twig' %}
+			{% else %}
+				{% include 'music/song.twig' %}
+				{% include 'music/edit.twig' %}
+			{% endif %}
+		</div>
+		
+		<!-------- SEARCH RESULTS ------->
+		<div id="search--results" class="tx-search-results">
+			
+		</div>
+	</main>
+	
+</div>
